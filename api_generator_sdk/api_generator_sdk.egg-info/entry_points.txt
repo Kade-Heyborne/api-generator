@@ -1,0 +1,2 @@
+[console_scripts]
+api-generator = api_generator_sdk.cli:main

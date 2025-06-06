@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+api_generator_sdk.egg-info/PKG-INFO
+api_generator_sdk.egg-info/SOURCES.txt
+api_generator_sdk.egg-info/dependency_links.txt
+api_generator_sdk.egg-info/entry_points.txt
+api_generator_sdk.egg-info/requires.txt
+api_generator_sdk.egg-info/top_level.txt

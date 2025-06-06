@@ -1,0 +1,148 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "api-generator-sdk"
+version = "1.0.0"
+description = "NLP-powered API generator for FastAPI and Django REST framework"
+readme = "README.md"
+license = "MIT"
+authors = [
+    {name = "API Generator SDK Team", email = "contact@apigenerator.dev"}
+]
+maintainers = [
+    {name = "API Generator SDK Team", email = "contact@apigenerator.dev"}
+]
+keywords = ["api", "generator", "fastapi", "django", "nlp", "code-generation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+]
+
+[project.optional-dependencies]
+fastapi = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "sqlalchemy>=2.0.0",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-multipart>=0.0.6",
+]
+django = [
+    "Django>=4.2.0",
+    "djangorestframework>=3.14.0",
+    "django-cors-headers>=4.3.0",
+    "djangorestframework-simplejwt>=5.3.0",
+]
+postgresql = [
+    "psycopg2-binary>=2.9.0",
+]
+mysql = [
+    "mysqlclient>=2.2.0",
+]
+mongodb = [
+    "motor>=3.3.0",
+    "beanie>=1.23.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "pre-commit>=3.0.0",
+]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.23.0",
+]
+all = [
+    "api-generator-sdk[fastapi,django,postgresql,mysql,mongodb]",
+]
+
+[project.urls]
+Homepage = "https://github.com/api-generator/api-generator-sdk"
+Documentation = "https://api-generator-sdk.readthedocs.io/"
+Repository = "https://github.com/api-generator/api-generator-sdk.git"
+"Bug Tracker" = "https://github.com/api-generator/api-generator-sdk/issues"
+Changelog = "https://github.com/api-generator/api-generator-sdk/blob/main/CHANGELOG.md"
+
+[project.scripts]
+api-generator = "api_generator_sdk.cli:main"
+
+[tool.setuptools]
+packages = { find = { where = ["."] } }
+
+[tool.setuptools.package-data]
+api_generator_sdk = ["templates/**/*", "schemas/**/*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = "\\.pyi?$"
+extend-exclude = "build|dist|venv|tox|git|hg|eggs"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["api_generator_sdk"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=api_generator_sdk",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+]
+markers = [
+    "slow: marks tests as slow",
+]
+
+[tool.coverage.run]
+source = ["api_generator_sdk"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+exclude_lines = ["def __repr__"]

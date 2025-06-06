@@ -1,0 +1,9 @@
+logging
+typing
+pathlib
+dataclasses
+requests
+networkx
+django
+django-rest-framework
+fastapi
